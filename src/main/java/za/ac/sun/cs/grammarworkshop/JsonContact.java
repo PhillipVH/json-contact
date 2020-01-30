@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -82,7 +83,8 @@ public class JsonContact {
             throw new RuntimeException("Invalid date");
         }
     }
-    private static void validateContact(Contact contact) {
+
+    static void validateContact(Contact contact) {
 
         // Validate the age
         if (contact.age < 0) {
@@ -100,47 +102,5 @@ public class JsonContact {
         // Validate the date of birth
         validateDateOfBirth(contact.dob);
 
-    }
-
-    public static void main(String[] args) {
-        Gson gson = new Gson();
-
-        // Read the contract file
-        InputStream jsonStream = JsonContact.class.getResourceAsStream("/contacts/entry1.json");
-        String result = new BufferedReader(new InputStreamReader(jsonStream))
-                .lines().collect(Collectors.joining("\n"));
-
-        // Parse the contact file
-        Contact contact = gson.fromJson(result, Contact.class);
-        Address address = contact.address;
-        Phone[] phoneNumbers = contact.phoneNumbers;
-
-        // Validate the fields
-        validateContact(contact);
-
-        // Save to CSV
-        String header = "FirstName,LastName,DoB,Email,Address.StreetName,Address.StreetNum,PhoneNumbers\n";
-        StringBuilder csvBuilder = new StringBuilder(header);
-
-        csvBuilder.append(contact.firstName)
-                .append(',')
-                .append(contact.lastName)
-                .append(',')
-                .append(contact.age)
-                .append(',')
-                .append(contact.dob)
-                .append(',')
-                .append(contact.email)
-                .append(',')
-                .append(address.streetName)
-                .append(',')
-                .append(address.streetNum)
-                .append(',');
-
-        for (Phone phone : phoneNumbers) {
-            csvBuilder.append(phone.label).append(":").append(phone.number).append(",");
-        }
-
-        System.out.println(csvBuilder.toString());
     }
 }
