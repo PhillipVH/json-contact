@@ -75,8 +75,7 @@ public class JsonContact {
         Date testDate;
         try {
             testDate = sdf.parse(date);
-        }
-        catch (ParseException e) {
+        } catch (ParseException e) {
             throw new RuntimeException("Invalid date");
         }
         if (!sdf.format(testDate).equals(date)) {
@@ -103,4 +102,42 @@ public class JsonContact {
         validateDateOfBirth(contact.dob);
 
     }
+
+    public static void parseJSONContact(String content) {
+        // Parse the contact file
+        Gson gson = new Gson();
+        Contact contact = gson.fromJson(content, Contact.class);
+        Address address = contact.address;
+        Phone[] phoneNumbers = contact.phoneNumbers;
+
+        // Validate the fields
+        validateContact(contact);
+
+        // Save to CSV
+        String header = "FirstName,LastName,DoB,Email,Address.StreetName,Address.StreetNum,PhoneNumbers\n";
+        StringBuilder csvBuilder = new StringBuilder(header);
+
+        csvBuilder.append(contact.firstName)
+                .append(',')
+                .append(contact.lastName)
+                .append(',')
+                .append(contact.age)
+                .append(',')
+                .append(contact.dob)
+                .append(',')
+                .append(contact.email)
+                .append(',')
+                .append(address.streetName)
+                .append(',')
+                .append(address.streetNum)
+                .append(',');
+
+        for (Phone phone : phoneNumbers) {
+            csvBuilder.append(phone.label).append(":").append(phone.number).append(",");
+        }
+
+        System.out.println(csvBuilder.toString());
+
+    }
+
 }
