@@ -1,24 +1,19 @@
-package za.ac.sun.cs.grammarworkshop;
+package jsoncontact;
 
-import com.google.gson.Gson;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static za.ac.sun.cs.grammarworkshop.JsonContact.*;
 
 public class JsonContactTest {
     @Test
     public void parseJSONContractTest() throws IOException {
 
-        System.out.println();
-
-        // Read the contract file
-        File dir = new File("src/main/resources/rule/pos/rule");
+        // Read the contact file
+        File dir = new File("src/main/resources/contacts");
         File[] directoryListing = dir.listFiles();
         if (directoryListing != null) {
             for (File child : directoryListing) {

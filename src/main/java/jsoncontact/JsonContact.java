@@ -1,18 +1,13 @@
-package za.ac.sun.cs.grammarworkshop;
+package jsoncontact;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 class Address {
     @SerializedName("street-name")
@@ -59,12 +54,12 @@ public class JsonContact {
 
     private static void validatePhone(Phone phone) {
         if (phone.number.length() != 10) {
-            throw new RuntimeException("Phone number must be 10 digits long.");
+            throw new RuntimeException("jsoncontact.Phone number must be 10 digits long.");
         }
 
         for (char digit : phone.number.toCharArray()) {
             if (!Character.isDigit(digit)) {
-                throw new RuntimeException("Phone number can only contain numbers.");
+                throw new RuntimeException("jsoncontact.Phone number can only contain numbers.");
             }
         }
 
@@ -114,7 +109,7 @@ public class JsonContact {
         validateContact(contact);
 
         // Save to CSV
-        String header = "FirstName,LastName,DoB,Email,Address.StreetName,Address.StreetNum,PhoneNumbers\n";
+        String header = "FirstName,LastName,DoB,Email,jsoncontact.Address.StreetName,jsoncontact.Address.StreetNum,PhoneNumbers\n";
         StringBuilder csvBuilder = new StringBuilder(header);
 
         csvBuilder.append(contact.firstName)
