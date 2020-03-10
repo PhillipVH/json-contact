@@ -6,7 +6,7 @@
   "email": "masekind@mail.com",
   "address": {
     "street-name": "a street",
-    "street-num": 23
+    "street-num": "lol"
   },
   "phone-numbers": [
     {

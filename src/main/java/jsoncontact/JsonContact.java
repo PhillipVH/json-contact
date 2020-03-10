@@ -54,12 +54,12 @@ public class JsonContact {
 
     private static void validatePhone(Phone phone) {
         if (phone.number.length() != 10) {
-            throw new RuntimeException("jsoncontact.Phone number must be 10 digits long.");
+            throw new RuntimeException("Phone number must be 10 digits long.");
         }
 
         for (char digit : phone.number.toCharArray()) {
             if (!Character.isDigit(digit)) {
-                throw new RuntimeException("jsoncontact.Phone number can only contain numbers.");
+                throw new RuntimeException("Phone number can only contain numbers.");
             }
         }
 
@@ -98,7 +98,7 @@ public class JsonContact {
 
     }
 
-    public static void parseJSONContact(String content) {
+    public static String parseJSONContact(String content) {
         // Parse the contact file
         Gson gson = new Gson();
         Contact contact = gson.fromJson(content, Contact.class);
@@ -131,8 +131,6 @@ public class JsonContact {
             csvBuilder.append(phone.label).append(":").append(phone.number).append(",");
         }
 
-        System.out.println(csvBuilder.toString());
-
+        return csvBuilder.toString();
     }
-
 }
